@@ -1,6 +1,8 @@
+# BEGIN HELPER FUNCTIONS
 def headprint(s):
     print(" # "+s+" # \n")
 
+# BEGIN MAIN ALGORITHMS 
 def Decision_Tree():
     headprint("Decision Tree")
     
@@ -13,4 +15,3 @@ def Naive_Bayesian():
 def Linear_Bayesian():
     headprint("Linear Bayesian")
     
-Optimal_Bayesian();
