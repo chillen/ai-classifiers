@@ -89,6 +89,10 @@ def buildTree(S, headers):
     np.random.shuffle(S)
     return _buildTree(S, headers)
     
+#def test(S, tree, headers):
+ #   for sample in S:
+        
+    
 def pprint(tree, indent=0):
     if indent == 0:
         key = [k for k in tree][0]

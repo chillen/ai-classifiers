@@ -24,4 +24,4 @@ wines = ["class", "alcohol", "malic acid", "ash", "alcalinity", "magnesium", "to
 hearts = ["age", "gender", "cp", "trestbps", "chol", "fbs", "restecg", "thalach", "exang", "oldpeak", "dlope", "ca", "thal", "class"]
 iriss = ["sepal length", "sepal width", "petal length", "petal width", "class"]
 
-optimal.build(iris, iriss)
+optimal.build(heart, hearts)
