@@ -1,15 +1,11 @@
 import numpy as np
 import decisionTree as dt
+import naive
+import optimal
 
 # BEGIN HELPER FUNCTIONS
 def headprint(s):
     print(" # "+s+" # \n")
-
-## 1. Partition the training data into two sets, belonging to class A and class B
-## 2. Calculate normal distribution for each set
-## 3. Form the classification equation
-def Naive_Bayesian():
-    headprint("Naive Bayesian")
    
 ## I assume this is just a single vector as opposed to matrix (i.e. not diagonal)? Not entirely sure.        
 def Linear_Bayesian():
@@ -22,5 +18,10 @@ def Optimal_Bayesian():
     headprint("Optimal Bayesian")
     
 wine = np.genfromtxt('data/wine.csv', delimiter=',')
+heart = np.genfromtxt('data/heartDisease.csv', delimiter=',')
+iris = np.genfromtxt('data/iris.csv', delimiter=',')
 wines = ["class", "alcohol", "malic acid", "ash", "alcalinity", "magnesium", "total phenols", "flavanoids", "nonflavanoid phenols", "proanthocyanins", "color", "hue", "OD280", "proline"]
-dt.prettyPrint(dt.Build_Tree(wine, [], 0, wines), 1)
+hearts = ["age", "gender", "cp", "trestbps", "chol", "fbs", "restecg", "thalach", "exang", "oldpeak", "dlope", "ca", "thal", "class"]
+iriss = ["sepal length", "sepal width", "petal length", "petal width", "class"]
+
+optimal.build(iris, iriss)

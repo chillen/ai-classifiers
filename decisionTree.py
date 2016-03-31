@@ -1,96 +1,95 @@
-import numpy as np
 import math
 from collections import defaultdict
+import numpy as np
 
-
-# Takes dataset S and index of class i
-def Entropy(S, index):
-    entropy = 0
-    classes = defaultdict(lambda: 0)
+def Entropy(S): 
+    entropy=0
+    classes = [sample[0] for sample in S]
+    classSum = defaultdict(lambda: 0)
     
-    for row in S:
-        classes[row[index]] += 1
-                
     for c in classes:
-        prob = c / len(S)
-        if prob != 0:
-            entropy -= prob * math.log(prob, 2)
+        classSum[c] += 1
+    for c in set(classes):
+        p = float(classSum[c]) / len(S)
+        entropy -= p*math.log2(p)
     return entropy
-        
-# Returns a dataset where everything under max is returned with that attribute removed
-def Split(S, index, min, max):
+ 
+def split(S, A, min, max):
     data = []
     for sample in S:
-        if min <= sample[index] < max:
-            reduced = sample[:index]
-            reduced = np.append(reduced, sample[index+1:])
-            data.append(reduced)
-    return data  
-     
-def Gain(S, A, index): 
-    maxV = -99999
-    minV = 99999
-    for row in S:
-        maxV = max(maxV, row[A])
-        minV = min(minV, row[A])
-    Sv1 = Split(S, A, minV, maxV*.3)
-    Sv2 = Split(S, A, maxV*.3, maxV*.6)
-    Sv3 = Split(S, A, maxV*.6, maxV+1) # Go a bit past the max here
-    return Entropy(S, index) - math.fsum([Entropy(Sv1, index), Entropy(Sv2, index), Entropy(Sv3, index)])
+        if min <= sample[A] < max:  
+            reduce = sample[:A]
+            np.append(reduce, sample[A+1:], axis=0)
+            data.append(reduce)
+    return data
     
-# Returns an unformatted decision tree; index is the index of the classification    
-def Build_Tree(S, Node, index, wines): 
-    bestGain = (-1,-9999)
-    
-    for i, feature in enumerate(S[0]):
-        if i != index:
-            if Gain(S, i, index) > bestGain[1]:
-                bestGain = (i, bestGain[1])
-        
-    if 0 < bestGain[0] < len(wines): 
-        bestGain = (bestGain[0], bestGain[1], wines[bestGain[0]])
-        print(wines[bestGain[0]])
-        wines.remove(wines[bestGain[0]])          
-    
-    # Find min and max
-    maxV = -99999
-    minV = 99999
-    
-    for row in S:
-        maxV = max(maxV, row[bestGain[0]])
-        minV = min(minV, row[bestGain[0]])
-    
-    if bestGain[0] < index:
-        index -= 1
-        
-    if len(S[0]) == 2:
-        return [bestGain[2]]
-    
-    Sv1 = Split(S, bestGain[0], minV, maxV*.3)
-    Sv2 = Split(S, bestGain[0], maxV*.3, maxV*.6)
-    Sv3 = Split(S, bestGain[0], maxV*.6, maxV+1) # Go a bit past the max here
-        
-    if len(Sv1) > 0 and (Entropy(Sv1, index) == 1 or Entropy(Sv1, index) == 0):
-        return [bestGain[2]]
-    if len(Sv2) > 0 and (Entropy(Sv2, index) == 1 or Entropy(Sv2, index) == 0):
-        return [bestGain[2]]
-    if len(Sv3) > 0 and (Entropy(Sv2, index) == 1 or Entropy(Sv2, index) == 0):
-        return [bestGain[2]]  
-          
-    if len(Sv1) > 0:    
-        Node.append(Build_Tree(Sv1, [], index, wines))
-    if len(Sv2) > 0:    
-        Node.append(Build_Tree(Sv2, [], index, wines))
-    if len(Sv3) > 0:    
-        Node.append(Build_Tree(Sv3, [], index, wines))
-    
-    # Add a child for every possibility
+def gain(S, A):
+    maxV = max([sample[A] for sample in S])
+    minV = min([sample[A] for sample in S])
+    # binary binning because lazy
+    Sv1 = split(S, A, minV, maxV/2)
+    Sv2 = split(S, A, maxV/2, maxV+1)
+    return Entropy(S) - (( (len(Sv1) / len(S)) * Entropy(Sv1) ) + ( (len(Sv2) / len(S)) * Entropy(Sv2) ))
+       
 
-    return Node    
+def bestGain(S):
+    best = (-1, -9999)
+    for i, feature in enumerate(S[0][1:]):
+        if gain(S, i+1) > best[1]:
+            best = (i+1, gain(S, i+1))
+            
+    return best[0]    
+   
+def majorityClass(S):
+    classes = defaultdict(lambda:0)
+    for c in [sample[0] for sample in S]:
+        classes[c] += 1
+    maxF = -1
+    maxV = -1
+    for c in set([sample[0] for sample in S]):
+        if maxV < classes[c]:
+            maxV = classes[c]
+            maxF = c
+    return maxF            
 
-def prettyPrint(tree, depth):
-    if isinstance(tree, list):
-        for node in tree:
-              prettyPrint(node, depth+1)
-    else:
-        print('-'*depth, tree)
+def _buildTree(S, headers):
+    classes = [sample[0] for sample in S]
+    
+    if len(S) == 0:
+        return "Uncertain"
+    
+    if len(S[0])==1:
+        return majorityClass(S)
+        
+    best = bestGain(S)
+    
+    tree = {headers[best]:{}}
+    bestHeader = headers[best]
+    del (headers[best])
+    maxV = max([sample[best] for sample in S])
+    minV = min([sample[best] for sample in S])
+    Sv1 = split(S, best, minV, maxV/2)
+    Sv2 = split(S, best, maxV/2, maxV+1)   
+   
+    tree[bestHeader]["<= half"] = _buildTree(Sv1, headers[:])
+    tree[bestHeader]["> half"] = _buildTree(Sv2, headers[:])
+    
+    return tree
+def buildTree(S, headers): 
+    # Find the class header
+    classIndex = -1
+    for i, h in enumerate(headers):
+        if h == "class":
+            classIndex = i
+            
+    # Swap the position 0 with the class
+    if classIndex != 0:
+        S[:,[0,classIndex]] = S[:,[classIndex,0]]
+        headers[0], headers[classIndex] = headers[classIndex], headers[0]
+    np.random.shuffle(S)
+    return _buildTree(S, headers)
+    
+def pprint(tree, indent=0):
+    if indent == 0:
+        key = [k for k in tree][0]
+        print(key)
