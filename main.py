@@ -1,17 +1,9 @@
 import numpy as np
+import decisionTree as dt
 
 # BEGIN HELPER FUNCTIONS
 def headprint(s):
     print(" # "+s+" # \n")
-
-# BEGIN MAIN ALGORITHMS  
-
-# Take in training data and which index the classification is
-# Perform a 10-Fold training on it
-def Decision_Tree(data, classIndex):
-    headprint("Decision Tree")
-    trainingGroups = np.array_split(data, 10);
-    print(len(trainingGroups[0]))
 
 ## 1. Partition the training data into two sets, belonging to class A and class B
 ## 2. Calculate normal distribution for each set
@@ -30,4 +22,5 @@ def Optimal_Bayesian():
     headprint("Optimal Bayesian")
     
 wine = np.genfromtxt('data/wine.csv', delimiter=',')
-Decision_Tree(wine, 0)
+wines = ["class", "alcohol", "malic acid", "ash", "alcalinity", "magnesium", "total phenols", "flavanoids", "nonflavanoid phenols", "proanthocyanins", "color", "hue", "OD280", "proline"]
+dt.prettyPrint(dt.Build_Tree(wine, [], 0, wines), 1)
