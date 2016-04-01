@@ -1,4 +1,5 @@
 import numpy as np
+import numpy.matlib
 from collections import defaultdict
 import math
 import random
@@ -19,8 +20,7 @@ def getClassValue(Ea, Eb, Ma, Mb, x):
     Ma = np.matrix(Ma).T
     Mb = np.matrix(Mb).T
     x = np.matrix(x).T
-    np.seterr(invalid='ignore', divide='ignore')
-    return (np.nan_to_num(np.log(np.linalg.det(Eb))) - np.nan_to_num(np.log(np.linalg.det(Ea))) + mahaDistance(x, Mb, Eb) - mahaDistance(x, Ma, Ea)).item(0)
+    return (np.nan_to_num(np.log(np.linalg.det(Eb))) - np.nan_to_num(np.log(np.linalg.det(Ea))) + mahaDistance(x, Mb, Eb) - mahaDistance(x, Ma, Ea))[0]
 
 def getClassifier(training):
     T = defaultdict(lambda: [])
@@ -33,6 +33,7 @@ def getClassifier(training):
 
     for key in T:
         sums[key] = []
+        k = len(T[key][0])
         for sample in T[key]:
             for i, feature in enumerate(sample[1:]):
                 if len(sums[key]) > i:
@@ -44,25 +45,11 @@ def getClassifier(training):
         for element in sums[key]:
            M[key].append(element/len(T[key]))
 
-    # Mean vectors calculated, find the sum of (xi - Ma)(xi-Ma)^T
-    sums = {}
-    for key in T:
-        summable = []
-        for x in [sample[1:] for sample in T[key]]:
-            x1 = np.subtract(x, M[key])
-            x2 = np.transpose(x1)
-            summable.append( np.outer(x1,x2) )
-        sums[key] = np.sum(summable, axis=0)
-
     E = {}
 
     for key in T:
         if len(T[key]) != 1:
-            E[key] = (1/(len(T[key])-1)) * sums[key]
-    for key in sums:
-        M[key] = []
-        for element in sums[key]:
-           M[key].append(element/len(T[key]))
+            E[key] = numpy.matlib.identity(k-1)
     return {"E": E, "M": M}
 
 # Not sure how pairwise works. I'm going to just pull one class at random and one I know is correct
@@ -113,7 +100,7 @@ def _build(S, headers, leaveoneout, k=10):
 
 
 def build(S, headers, leaveoneout=False):
-    print("# Begin building classifiers: Naive")
+    print("# Begin building classifiers: Linear")
      # Find the class header
     classIndex = -1
     for i, h in enumerate(headers):

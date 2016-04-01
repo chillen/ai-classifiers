@@ -6,12 +6,12 @@ import random
 def mahaDistance(x, M, E):
     t1 = np.nan_to_num(np.transpose(x-M))
     try:
-        t2 = np.nan_to_num(E.getI())
+        t2 = E.getI()
     except:
-        t2 = np.nan_to_num(E)
-    t3 = np.nan_to_num(x-M)
-    t4 = np.nan_to_num(t1.dot(t2))
-    return np.nan_to_num(t4.dot(t3))
+        t2 = E
+    t3 = x-M
+    t4 =t1.dot(t2)
+    return t4.dot(t3)
 
 def getClassValue(Ea, Eb, Ma, Mb, x):
     Ea = np.matrix(Ea)
@@ -19,7 +19,8 @@ def getClassValue(Ea, Eb, Ma, Mb, x):
     Ma = np.matrix(Ma).T
     Mb = np.matrix(Mb).T
     x = np.matrix(x).T
-    return np.nan_to_num(np.log(Eb)) - np.nan_to_num(np.log(Ea)) + mahaDistance(x, Mb, Eb) - mahaDistance(x, Ma, Ea)
+    np.seterr(invalid='ignore', divide='ignore')
+    return (np.log(np.linalg.det(Eb)) - np.log(np.linalg.det(Ea)) + mahaDistance(x, Mb, Eb) - mahaDistance(x, Ma, Ea))[0]
 
 def getClassifier(training):
     T = defaultdict(lambda: [])
@@ -29,7 +30,7 @@ def getClassifier(training):
 
     sums = {}
     M = {}
-    
+
     for key in T:
         sums[key] = []
         for sample in T[key]:
@@ -41,8 +42,8 @@ def getClassifier(training):
     for key in sums:
         M[key] = []
         for element in sums[key]:
-           M[key].append(element/len(T[key])) 
-    
+           M[key].append(element/len(T[key]))
+
     # Mean vectors calculated, find the sum of (xi - Ma)(xi-Ma)^T
     sums = {}
     for key in T:
@@ -52,9 +53,9 @@ def getClassifier(training):
             x2 = np.transpose(x1)
             summable.append( np.outer(x1,x2) )
         sums[key] = np.sum(summable, axis=0)
-        
+
     E = {}
-    
+
     for key in T:
         if len(T[key]) != 1:
             E[key] = (1/(len(T[key])-1)) * sums[key]
@@ -68,27 +69,26 @@ def testClassifier(training, testing):
     for test in testing:
         for sample in test:
             actualClass = sample[0]
-            Ea = classifier["E"][actualClass]
-            Ma = classifier["M"][actualClass]
-        
-            # Choose a random other class
-            possible = random.sample(list(classifier["E"]),2)
-            if possible[0] == actualClass:
-                otherClass = possible[1]
-            else:
-                otherClass = possible[0]
-            
-            Eb = classifier["E"][otherClass]
-            Mb = classifier["M"][otherClass]
-            
-            val = getClassValue(Ea, Eb, Ma, Mb, sample[1:])
-            
-            if val.any() > 0:
-                successes += 1
+            possibleClasses = set([classes for classes in classifier["E"]])
+            classA = possibleClasses.pop()
+            while len(possibleClasses) > 0:
+                classB = possibleClasses.pop()
+                Ea = classifier["E"][classA]
+                Ma = classifier["M"][classA]
+                Eb = classifier["E"][classB]
+                Mb = classifier["M"][classB]
+
+                val = getClassValue(Ea, Eb, Ma, Mb, sample[1:])
+                if val <= 0:
+                    classA = classB
+            if classA == actualClass:
+                successes +=1
             totalTest += 1
-    return successes/totalTest           
-  
-def _build(S, headers, k=10):
+    return successes/totalTest
+
+def _build(S, headers, leaveoneout, k=10):
+    if leaveoneout:
+        k = len(headers)-1
     splitArrays = np.array_split(S, k)
     bestTestScore = -99999
     bestTestIndex = -1
@@ -104,20 +104,21 @@ def _build(S, headers, k=10):
         if testScore > bestTestScore:
             bestTestScore = testScore
             bestTestIndex = i
-            
-    print("Best Accuracy Found: " + str(bestTestScore))
-                
 
-def build(S, headers):
+    print("Best Accuracy Found: " + str(bestTestScore))
+
+
+def build(S, headers, leaveoneout=False):
      # Find the class header
+    print("# Begin building classifiers: Optimal")
     classIndex = -1
     for i, h in enumerate(headers):
         if h == "class":
             classIndex = i
-            
+
     # Swap the position 0 with the class
     if classIndex != 0:
         S[:,[0,classIndex]] = S[:,[classIndex,0]]
         headers[0], headers[classIndex] = headers[classIndex], headers[0]
     np.random.shuffle(S)
-    _build(S, headers)
+    _build(S, headers,leaveoneout)

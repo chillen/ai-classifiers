@@ -2,21 +2,8 @@ import numpy as np
 import decisionTree as dt
 import naive
 import optimal
+import linear
 
-# BEGIN HELPER FUNCTIONS
-def headprint(s):
-    print(" # "+s+" # \n")
-   
-## I assume this is just a single vector as opposed to matrix (i.e. not diagonal)? Not entirely sure.        
-def Linear_Bayesian():
-    headprint("Linear Bayesian")
-        
-## The only difference between OB and NB is the covariance matrix used. In Naive, the 
-## covariance matrix is just a diagonal matrix, but in an optimal bayes we use a full
-## matrix.        
-def Optimal_Bayesian():
-    headprint("Optimal Bayesian")
-    
 wine = np.genfromtxt('data/wine.csv', delimiter=',')
 heart = np.genfromtxt('data/heartDisease.csv', delimiter=',')
 iris = np.genfromtxt('data/iris.csv', delimiter=',')
@@ -24,4 +11,23 @@ wines = ["class", "alcohol", "malic acid", "ash", "alcalinity", "magnesium", "to
 hearts = ["age", "gender", "cp", "trestbps", "chol", "fbs", "restecg", "thalach", "exang", "oldpeak", "dlope", "ca", "thal", "class"]
 iriss = ["sepal length", "sepal width", "petal length", "petal width", "class"]
 
+print(" -- Wines -- ")
+wineTree = dt.build(wine, wines)
+dt.test(wine, wineTree, wines)
+optimal.build(wine, wines)
+naive.build(wine,wines)
+linear.build(wine, wines)
+
+print(" -- Heart -- ")
+heartTree = dt.build(heart, hearts)
+dt.test(heart, heartTree, hearts)
 optimal.build(heart, hearts)
+naive.build(heart,hearts)
+linear.build(heart, hearts)
+
+print(" -- Iris -- ")
+irisTree = dt.build(iris, iriss)
+dt.test(iris, irisTree, iriss)
+optimal.build(iris, iriss)
+naive.build(iris,iriss)
+linear.build(iris, iriss)

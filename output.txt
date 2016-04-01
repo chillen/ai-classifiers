@@ -1,0 +1,115 @@
+ -- Wines -- 
+ # Building Tree
+# Finished Building Tree
+# Begining DT Tests
+Successes:  138
+Total:  178
+Result:  0.7752808988764045
+# DT Tests Complete
+# Begin building classifiers: Optimal
+Completed a test with accuracy of: 0.325
+Completed a test with accuracy of: 0.33125
+Completed a test with accuracy of: 0.32916666666666666
+Completed a test with accuracy of: 0.5375
+Completed a test with accuracy of: 0.32625
+Completed a test with accuracy of: 0.20833333333333334
+Completed a test with accuracy of: 0.33303571428571427
+Completed a test with accuracy of: 0.26171875
+Completed a test with accuracy of: 0.3789035392088827
+Completed a test with accuracy of: 0.33146067415730335
+Best Accuracy Found: 0.5375
+# Begin building classifiers: Naive
+Completed a test with accuracy of: 0.2875
+Completed a test with accuracy of: 0.346875
+Completed a test with accuracy of: 0.3416666666666667
+Completed a test with accuracy of: 0.265625
+Completed a test with accuracy of: 0.55
+Completed a test with accuracy of: 0.3489583333333333
+Completed a test with accuracy of: 0.4035714285714286
+Completed a test with accuracy of: 0.33203125
+Completed a test with accuracy of: 0.3712699514226232
+Completed a test with accuracy of: 0.028089887640449437
+Best Accuracy Found: 0.55
+# Begin building classifiers: Linear
+Completed a test with accuracy of: 0.73125
+Completed a test with accuracy of: 0.490625
+Completed a test with accuracy of: 0.7083333333333334
+Completed a test with accuracy of: 0.5234375
+Completed a test with accuracy of: 0.6875
+Completed a test with accuracy of: 0.7072916666666667
+Completed a test with accuracy of: 0.7303571428571428
+Completed a test with accuracy of: 0.721875
+Completed a test with accuracy of: 0.7265787647467037
+Completed a test with accuracy of: 0.7247191011235955
+Best Accuracy Found: 0.73125
+ -- Heart -- 
+ # Building Tree
+# Finished Building Tree
+# Begining DT Tests
+Successes:  178
+Total:  297
+Result:  0.5993265993265994
+# DT Tests Complete
+# Begin building classifiers: Optimal
+Completed a test with accuracy of: 0.17228464419475656
+Completed a test with accuracy of: 0.11423220973782772
+Completed a test with accuracy of: 0.5518102372034956
+Completed a test with accuracy of: 0.549625468164794
+Completed a test with accuracy of: 0.17752808988764046
+Completed a test with accuracy of: 0.17852684144818975
+Completed a test with accuracy of: 0.18084537185660782
+Completed a test with accuracy of: 0.18062704726251755
+Completed a test with accuracy of: 0.5405405405405406
+Completed a test with accuracy of: 0.18181818181818182
+Best Accuracy Found: 0.5518102372034956
+# Begin building classifiers: Naive
+Completed a test with accuracy of: 0.12359550561797752
+Completed a test with accuracy of: 0.1704119850187266
+Completed a test with accuracy of: 0.19600499375780275
+Completed a test with accuracy of: 0.1853932584269663
+Completed a test with accuracy of: 0.11760299625468165
+Completed a test with accuracy of: 0.048064918851435705
+Completed a test with accuracy of: 0.11717495987158909
+Completed a test with accuracy of: 0.11745437529246608
+Completed a test with accuracy of: 0.1654885654885655
+Completed a test with accuracy of: 0.18181818181818182
+Best Accuracy Found: 0.19600499375780275
+# Begin building classifiers: Linear
+Completed a test with accuracy of: 0.3408239700374532
+Completed a test with accuracy of: 0.2846441947565543
+Completed a test with accuracy of: 0.37952559300873906
+Completed a test with accuracy of: 0.42602996254681647
+Completed a test with accuracy of: 0.39250936329588015
+Completed a test with accuracy of: 0.3364544319600499
+Completed a test with accuracy of: 0.19850187265917604
+Completed a test with accuracy of: 0.42302292934019653
+Completed a test with accuracy of: 0.2257796257796258
+Completed a test with accuracy of: 0.3367003367003367
+Best Accuracy Found: 0.42602996254681647
+ -- Iris -- 
+ # Building Tree
+# Finished Building Tree
+# Begining DT Tests
+Successes:  95
+Total:  150
+Result:  0.6333333333333333
+# DT Tests Complete
+# Begin building classifiers: Optimal
+Completed a test with accuracy of: 0.34814814814814815
+Completed a test with accuracy of: 0.32222222222222224
+Completed a test with accuracy of: 0.32839506172839505
+Completed a test with accuracy of: 0.6462962962962963
+Completed a test with accuracy of: 0.33925925925925926
+Completed a test with accuracy of: 0.6654320987654321
+Completed a test with accuracy of: 0.6645502645502646
+Completed a test with accuracy of: 0.3296296296296296
+Completed a test with accuracy of: 0.5604938271604938
+Completed a test with accuracy of: 0.3333333333333333
+Best Accuracy Found: 0.6654320987654321
+# Begin building classifiers: Naive
+Completed a test with accuracy of: 0.34074074074074073
+Completed a test with accuracy of: 0.662962962962963
+Completed a test with accuracy of: 0.3432098765432099
+Completed a test with accuracy of: 0.42962962962962964
+Completed a test with accuracy of: 0.3422222222222222
+Completed a test with accuracy of: 0.33827160493827163
