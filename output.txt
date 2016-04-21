@@ -1,0 +1,149 @@
+ -- Wines -- 
+
+# Building Tree
+# Finished Building Tree
+# Begining DT Tests
+
+Successes:  138
+Total:  178
+Success Rate: 0.78
+
+# DT Tests Complete
+# Begin building classifiers: Optimal
+Completed a test with accuracy of: 0.31
+Completed a test with accuracy of: 0.17
+Completed a test with accuracy of: 0.33
+Completed a test with accuracy of: 0.33
+Completed a test with accuracy of: 0.33
+Completed a test with accuracy of: 0.39
+Completed a test with accuracy of: 0.33
+Completed a test with accuracy of: 0.33
+Completed a test with accuracy of: 0.33
+Completed a test with accuracy of: 0.33
+Best Accuracy Found: 0.39
+
+# Begin building classifiers: Naive
+Completed a test with accuracy of: 0.29
+Completed a test with accuracy of: 0.39
+Completed a test with accuracy of: 0.15
+Completed a test with accuracy of: 0.25
+Completed a test with accuracy of: 0.33
+Completed a test with accuracy of: 0.31
+Completed a test with accuracy of: 0.38
+Completed a test with accuracy of: 0.32
+Completed a test with accuracy of: 0.21
+Completed a test with accuracy of: 0.26
+Best Accuracy Found: 0.39
+
+# Begin building classifiers: Linear
+Completed a test with accuracy of: 0.72
+Completed a test with accuracy of: 0.72
+Completed a test with accuracy of: 0.70
+Completed a test with accuracy of: 0.71
+Completed a test with accuracy of: 0.49
+Completed a test with accuracy of: 0.73
+Completed a test with accuracy of: 0.48
+Completed a test with accuracy of: 0.68
+Completed a test with accuracy of: 0.71
+Completed a test with accuracy of: 0.72
+Best Accuracy Found: 0.73
+
+ -- Heart -- 
+
+# Building Tree
+# Finished Building Tree
+# Begining DT Tests
+
+Successes:  178
+Total:  297
+Success Rate: 0.60
+
+# DT Tests Complete
+# Begin building classifiers: Optimal
+Completed a test with accuracy of: 0.18
+Completed a test with accuracy of: 0.54
+Completed a test with accuracy of: 0.18
+Completed a test with accuracy of: 0.18
+Completed a test with accuracy of: 0.12
+Completed a test with accuracy of: 0.18
+Completed a test with accuracy of: 0.18
+Completed a test with accuracy of: 0.18
+Completed a test with accuracy of: 0.54
+Completed a test with accuracy of: 0.18
+Best Accuracy Found: 0.54
+
+# Begin building classifiers: Naive
+Completed a test with accuracy of: 0.18
+Completed a test with accuracy of: 0.12
+Completed a test with accuracy of: 0.12
+Completed a test with accuracy of: 0.12
+Completed a test with accuracy of: 0.18
+Completed a test with accuracy of: 0.12
+Completed a test with accuracy of: 0.46
+Completed a test with accuracy of: 0.12
+Completed a test with accuracy of: 0.18
+Completed a test with accuracy of: 0.18
+Best Accuracy Found: 0.46
+
+# Begin building classifiers: Linear
+Completed a test with accuracy of: 0.41
+Completed a test with accuracy of: 0.37
+Completed a test with accuracy of: 0.37
+Completed a test with accuracy of: 0.18
+Completed a test with accuracy of: 0.24
+Completed a test with accuracy of: 0.36
+Completed a test with accuracy of: 0.39
+Completed a test with accuracy of: 0.39
+Completed a test with accuracy of: 0.37
+Completed a test with accuracy of: 0.26
+Best Accuracy Found: 0.41
+
+ -- Iris -- 
+
+# Building Tree
+# Finished Building Tree
+# Begining DT Tests
+
+Successes:  95
+Total:  150
+Success Rate: 0.63
+# DT Tests Complete
+
+# Begin building classifiers: Optimal
+Completed a test with accuracy of: 0.66
+Completed a test with accuracy of: 0.66
+Completed a test with accuracy of: 0.34
+Completed a test with accuracy of: 0.33
+Completed a test with accuracy of: 0.33
+Completed a test with accuracy of: 0.33
+Completed a test with accuracy of: 0.34
+Completed a test with accuracy of: 0.34
+Completed a test with accuracy of: 0.33
+Completed a test with accuracy of: 0.67
+Best Accuracy Found: 0.67
+
+# Begin building classifiers: Naive
+Completed a test with accuracy of: 0.34
+Completed a test with accuracy of: 0.37
+Completed a test with accuracy of: 0.33
+Completed a test with accuracy of: 0.55
+Completed a test with accuracy of: 0.33
+Completed a test with accuracy of: 0.33
+Completed a test with accuracy of: 0.33
+Completed a test with accuracy of: 0.33
+Completed a test with accuracy of: 0.33
+Completed a test with accuracy of: 0.33
+Best Accuracy Found: 0.55
+
+# Begin building classifiers: Linear
+Completed a test with accuracy of: 0.90
+Completed a test with accuracy of: 0.95
+Completed a test with accuracy of: 0.94
+Completed a test with accuracy of: 0.91
+Completed a test with accuracy of: 0.91
+Completed a test with accuracy of: 0.96
+Completed a test with accuracy of: 0.93
+Completed a test with accuracy of: 0.91
+Completed a test with accuracy of: 0.95
+Completed a test with accuracy of: 0.91
+Best Accuracy Found: 0.96

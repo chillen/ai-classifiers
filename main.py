@@ -1,23 +1,37 @@
-# BEGIN HELPER FUNCTIONS
-def headprint(s):
-    print(" # "+s+" # \n")
+import numpy as np
+import decisionTree as dt
+import naive
+import optimal
+import linear
 
-# BEGIN MAIN ALGORITHMS 
-def Decision_Tree():
-    headprint("Decision Tree")
+wine = np.genfromtxt('data/wine.csv', delimiter=',')
+heart = np.genfromtxt('data/heartDisease.csv', delimiter=',')
+iris = np.genfromtxt('data/iris.csv', delimiter=',')
+wines = ["class", "alcohol", "malic acid", "ash", "alcalinity", "magnesium", "total phenols", "flavanoids", "nonflavanoid phenols", "proanthocyanins", "color", "hue", "OD280", "proline"]
+hearts = ["age", "gender", "cp", "trestbps", "chol", "fbs", "restecg", "thalach", "exang", "oldpeak", "dlope", "ca", "thal", "class"]
+iriss = ["sepal length", "sepal width", "petal length", "petal width", "class"]
 
-## 1. Partition the training data into two sets, belonging to class A and class B
-## 2. Calculate normal distribution for each set
-## 3. Form the classification equation
-def Naive_Bayesian():
-    headprint("Naive Bayesian")
-   
-## I assume this is just a single vector as opposed to matrix (i.e. not diagonal)? Not entirely sure.        
-def Linear_Bayesian():
-    headprint("Linear Bayesian")
-        
-## The only difference between OB and NB is the covariance matrix used. In Naive, the 
-## covariance matrix is just a diagonal matrix, but in an optimal bayes we use a full
-## matrix.        
-def Optimal_Bayesian():
-    headprint("Optimal Bayesian")
+print(" -- Wines -- ")
+wineTree = dt.build(wine, wines)
+dt.test(wine, wineTree, wines)
+optimal.build(wine, wines, leaveoneout=False)
+naive.build(wine,wines, leaveoneout=False)
+linear.build(wine, wines, leaveoneout=False)
+
+print(" -- Heart -- ")
+heartTree = dt.build(heart, hearts)
+dt.test(heart, heartTree, hearts)
+optimal.build(heart, hearts, leaveoneout=False)
+naive.build(heart,hearts, leaveoneout=False)
+linear.build(heart, hearts, leaveoneout=False)
+
+print(" -- Iris -- ")
+irisTree = dt.build(iris, iriss)
+dt.test(iris, irisTree, iriss)
+optimal.build(iris, iriss, leaveoneout=False)
+naive.build(iris,iriss, leaveoneout=False)
+linear.build(iris, iriss, leaveoneout=False)
+
+# print(wineTree)
+# print(heartTree)
+# print(irisTree)
