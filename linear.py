@@ -4,6 +4,9 @@ from collections import defaultdict
 import math
 import random
 
+# (E1 + E2) / 2: Averaged, same covariance
+# do a training for each class
+
 def mahaDistance(x, M, E):
     t1 = np.nan_to_num(np.transpose(x-M))
     try:
@@ -17,6 +20,7 @@ def mahaDistance(x, M, E):
 def getClassValue(Ea, Eb, Ma, Mb, x):
     Ea = np.matrix(Ea)
     Eb = np.matrix(Eb)
+    Ea = Eb = (Ea + Eb) / 2
     Ma = np.matrix(Ma).T
     Mb = np.matrix(Mb).T
     x = np.matrix(x).T
@@ -45,11 +49,21 @@ def getClassifier(training):
         for element in sums[key]:
            M[key].append(element/len(T[key]))
 
+    # Mean vectors calculated, find the sum of (xi - Ma)(xi-Ma)^T
+    sums = {}
+    for key in T:
+        summable = []
+        for x in [sample[1:] for sample in T[key]]:
+            x1 = np.subtract(x, M[key])
+            x2 = np.transpose(x1)
+            summable.append( np.outer(x1,x2) )
+        sums[key] = np.sum(summable, axis=0)
+
     E = {}
 
     for key in T:
         if len(T[key]) != 1:
-            E[key] = numpy.matlib.identity(k-1)
+            E[key] = (1/(len(T[key])-1)) * sums[key]
     return {"E": E, "M": M}
 
 # Not sure how pairwise works. I'm going to just pull one class at random and one I know is correct
@@ -79,7 +93,7 @@ def testClassifier(training, testing):
 
 def _build(S, headers, leaveoneout, k=10):
     if leaveoneout:
-        k = len(headers)-1
+        k = len(S)-1
     splitArrays = np.array_split(S, k)
     bestTestScore = -99999
     bestTestIndex = -1
@@ -91,12 +105,12 @@ def _build(S, headers, leaveoneout, k=10):
             else:
                 testing.append(splitArrays[j])
         testScore = testClassifier(training, testing)
-        print("Completed a test with accuracy of: " + str(testScore))
+        print("Completed a test with accuracy of: %0.2f" % testScore)
         if testScore > bestTestScore:
             bestTestScore = testScore
             bestTestIndex = i
 
-    print("Best Accuracy Found: " + str(bestTestScore))
+    print("Best Accuracy Found: %0.2f" % bestTestScore)
 
 
 def build(S, headers, leaveoneout=False):

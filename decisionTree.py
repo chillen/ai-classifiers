@@ -128,7 +128,7 @@ def test(S, tree, headers):
         totalTests += 1
     print("Successes: ", successes)
     print("Total: ", totalTests)
-    print("Result: ", successes/totalTests)
+    print("Success Rate: %0.2f" % (successes/totalTests))
     print("# DT Tests Complete")
     return (successes/totalTests, successes, totalTests)
 

@@ -92,7 +92,7 @@ def testClassifier(training, testing):
 
 def _build(S, headers, leaveoneout, k=10):
     if leaveoneout:
-        k = len(headers)-1
+        k = len(S)-1
     splitArrays = np.array_split(S, k)
     bestTestScore = -99999
     bestTestIndex = -1
@@ -104,12 +104,12 @@ def _build(S, headers, leaveoneout, k=10):
             else:
                 testing.append(splitArrays[j])
         testScore = testClassifier(training, testing)
-        print("Completed a test with accuracy of: " + str(testScore))
+        print("Completed a test with accuracy of: %0.2f" % testScore)
         if testScore > bestTestScore:
             bestTestScore = testScore
             bestTestIndex = i
 
-    print("Best Accuracy Found: " + str(bestTestScore))
+    print("Best Accuracy Found: %0.2f" % bestTestScore)
 
 
 def build(S, headers, leaveoneout=False):
